@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "200277451579",
+    "firebase_url": "https://what-eat-e7633.firebaseio.com",
+    "project_id": "what-eat-e7633",
+    "storage_bucket": "what-eat-e7633.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200277451579:android:d892fbafec4d1379",
+        "android_client_info": {
+          "package_name": "pannawat.com.whateat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200277451579-et6qcatns3asn9q7ujq8kljoesg6c7g6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvrZMNKm60dV7lBapQ5nCMryJjYCM0mF8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_food"
+        android:enabled="true"
+        android:icon="@drawable/food"
+        android:title="Random"/>
+    <item
+        android:id="@+id/item_add"
+        android:enabled="true"
+        android:icon="@drawable/add"
+        android:title="Add"/>
+    <item
+        android:id="@+id/item_menu"
+        android:enabled="true"
+        android:icon="@drawable/menu_food"
+        android:title="Menu"/>
+    <item
+        android:id="@+id/item_history"
+        android:enabled="true"
+        android:icon="@drawable/history"
+        android:title="History"/>
+
+</menu>
