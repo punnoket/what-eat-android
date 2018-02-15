@@ -4,15 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_default"
     tools:context="pannawat.com.whateat.SplashScreenActivity">
 
     <ImageView
-        android:scaleType="fitXY"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:id="@+id/image"
+        android:layout_centerInParent="true"
+        android:src="@drawable/icon"
+        android:layout_width="250dp"
+        android:layout_height="250dp" />
 
-    <ImageView
-        android:src="@drawable/splash"
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/image"
+        android:id="@+id/progress"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

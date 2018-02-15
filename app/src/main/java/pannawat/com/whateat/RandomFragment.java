@@ -5,11 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -43,6 +46,7 @@ public class RandomFragment extends Fragment implements AdapterView.OnItemSelect
     private Spinner spinner;
     private Button randomButton;
     private ImageView foodImageView;
+    private ImageView completeImageView;
     private TextView foodTextView;
     private LinearLayout linearLayout;
 
@@ -79,10 +83,9 @@ public class RandomFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     public void setUI() {
-        toolbar = view.findViewById(R.id.toolbar);
         randomButton = view.findViewById(R.id.random);
-        toolbar.setTitle("RANDOM FOOD");
         foodImageView = view.findViewById(R.id.food_image);
+        completeImageView = view.findViewById(R.id.complete);
         foodTextView = view.findViewById(R.id.food_name);
         linearLayout = view.findViewById(R.id.food_random);
         spinner = view.findViewById(R.id.spinner);
@@ -114,16 +117,56 @@ public class RandomFragment extends Fragment implements AdapterView.OnItemSelect
         }
     }
 
-    public void randomFood() {
+    private void startCompleteAnimation() {
+        completeImageView.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.SlideInUp)
+                .duration(1000)
+                .playOn(completeImageView);
+        int splashInterval = 2000;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                YoYo.with(Techniques.SlideOutDown)
+                        .duration(1000)
+                        .playOn(completeImageView);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        completeImageView.setVisibility(View.GONE);
+                    }
+                }, 2000);
+            }
+        }, splashInterval);
+    }
+
+    private void startAnimation() {
         linearLayout.setVisibility(View.VISIBLE);
+        foodImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.splash));
+        foodTextView.setText("");
+        YoYo.with(Techniques.FadeIn)
+                .duration(700)
+                .repeat(randomNum(3)+1)
+                .playOn(foodImageView);
+        int splashInterval = 3000;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                randomFood();
+            }
+        }, splashInterval);
+    }
+
+    public void randomFood() {
+        startCompleteAnimation();
         if (type.equalsIgnoreCase("ALL")) {
             foodModel.getFoodArrayList(new GetAllFoodListener() {
                 @Override
                 public void getAllFood(ArrayList<Food> foods) {
                     foodArrayList = foods;
-                    food = foodArrayList.get(randomNum());
+                    food = foodArrayList.get(randomNum(foodArrayList.size()));
                     foodImageView.setImageBitmap(convertImage(food.getImage()));
                     foodTextView.setText(food.getName());
+                    linearLayout.setVisibility(View.VISIBLE);
                 }
             });
         } else {
@@ -133,10 +176,10 @@ public class RandomFragment extends Fragment implements AdapterView.OnItemSelect
                     int i = 0;
                     while (i<50) {
                         foodArrayList = foods;
-                        food = foodArrayList.get(randomNum());
+                        food = foodArrayList.get(randomNum(foodArrayList.size()));
                         foodImageView.setImageBitmap(convertImage(food.getImage()));
                         foodTextView.setText(food.getName());
-                        Log.d("ran", "getAllFood: "+randomNum());
+                        linearLayout.setVisibility(View.VISIBLE);
                         i++;
                     }
                 }
@@ -150,9 +193,9 @@ public class RandomFragment extends Fragment implements AdapterView.OnItemSelect
         return decodedByte;
     }
 
-    public int randomNum() {
+    public int randomNum(int bound) {
         Random random = new Random();
-        int ran = random.nextInt(foodArrayList.size());
+        int ran = random.nextInt(bound);
         return ran;
     }
 
@@ -184,7 +227,7 @@ public class RandomFragment extends Fragment implements AdapterView.OnItemSelect
 
         switch (id) {
             case R.id.random:
-                randomFood();
+                startAnimation();
         }
     }
 

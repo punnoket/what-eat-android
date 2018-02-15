@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorAppTheme">#F3A530</color>
+    <color name="color_default">#f2b626</color>
     <color name="colorWhite">#FFFF</color>
     <color name="colorTran">#99000000</color>
 </resources>

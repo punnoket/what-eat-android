@@ -11,24 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorAppTheme" />
-
-        </android.support.design.widget.AppBarLayout>
-
         <ListView
             android:id="@+id/list_menu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="?attr/actionBarSize"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -41,12 +27,12 @@
 
 
     <ProgressBar
-        android:id="@+id/progress"
-        android:visibility="gone"
-        android:theme="@color/colorAppTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+    android:theme="@style/Progressbar.White"
+    android:id="@+id/progress"
+    android:visibility="gone"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"/>
 
 </RelativeLayout>

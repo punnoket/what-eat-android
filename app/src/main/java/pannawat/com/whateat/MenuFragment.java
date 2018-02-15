@@ -65,8 +65,6 @@ public class MenuFragment extends Fragment {
     }
 
     public void setUI() {
-        toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("MENU FOOD");
         listView = view.findViewById(R.id.list_menu);
         progressBar = view.findViewById(R.id.progress);
         relativeLayout = view.findViewById(R.id.loding_layout);

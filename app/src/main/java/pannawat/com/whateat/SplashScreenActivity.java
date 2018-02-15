@@ -9,7 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
+import android.widget.ProgressBar;
+
 import com.crashlytics.android.Crashlytics;
+import com.github.ybq.android.spinkit.style.ThreeBounce;
+
 import io.fabric.sdk.android.Fabric;
 
 
@@ -25,6 +29,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash_screen);
         handler = new Handler();
+        ProgressBar progressBar = findViewById(R.id.progress);
+        ThreeBounce threeBounce = new ThreeBounce();
+        threeBounce.setColor(R.color.color_button_default);
+        progressBar.setIndeterminateDrawable(threeBounce);
 
         runnable = new Runnable() {
             public void run() {

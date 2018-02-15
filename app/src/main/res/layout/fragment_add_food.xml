@@ -2,67 +2,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context="pannawat.com.whateat.RandomFragment">
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorAppTheme" />
-
-        </android.support.design.widget.AppBarLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="50sp">
+            android:padding="30sp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginBottom="10sp"
                 android:text="NAME"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/input_name"
-                android:layout_marginBottom="20sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"
+                android:backgroundTint="@color/color_default" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginBottom="10sp"
                 android:text="TYPE OF FOOD"
                 android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/spiner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"></Spinner>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
 
         </LinearLayout>
 
         <LinearLayout
-            android:padding="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -70,16 +55,17 @@
             <ImageView
                 android:id="@+id/food_image"
                 android:layout_width="match_parent"
-                android:layout_height="120sp"
-                android:src="@drawable/uoload_image"
-                android:layout_marginBottom="20sp"/>
+                android:layout_height="150sp"
+                android:layout_marginBottom="20sp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/uoload_image" />
 
             <Button
                 android:id="@+id/add_food"
-                android:layout_width="wrap_content"
-                android:layout_height="30sp"
+                android:layout_width="200sp"
+                android:layout_height="40sp"
                 android:layout_gravity="center"
-                android:background="@color/colorAppTheme"
+                android:background="@drawable/shape_default"
                 android:text="ADD"
                 android:textColor="@color/colorWhite" />
 
@@ -88,20 +74,20 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/loding_layout"
-        android:background="@color/colorTran"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></RelativeLayout>
+        android:layout_height="match_parent"
+        android:background="@color/colorTran"
+        android:visibility="gone"></RelativeLayout>
 
 
     <ProgressBar
         android:id="@+id/progress"
-        android:visibility="gone"
-        android:theme="@color/colorAppTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:theme="@style/Progressbar.White"
+        android:visibility="gone" />
 
 </RelativeLayout>

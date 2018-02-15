@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
@@ -86,8 +87,6 @@ public class AddFoodFragment extends Fragment implements View.OnClickListener, A
     }
 
     public void setUI() {
-        toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("ADD FOOD");
         imageView = view.findViewById(R.id.food_image);
         spinner = view.findViewById(R.id.spiner);
         nameEditText = view.findViewById(R.id.input_name);
@@ -145,18 +144,17 @@ public class AddFoodFragment extends Fragment implements View.OnClickListener, A
                 browseImage();
                 break;
             case R.id.add_food:
-                try {
-                    if(nameEditText.getText().toString().length()==0||picturePath.length()==0) {
-                        throw new Exception();
+                    if (validate()) {
+                        addFood();
+                    } else {
+                        Snackbar.make(addbutton, "Please Fill Information", Snackbar.LENGTH_LONG);
                     }
-                    addFood();
-                } catch (Exception e) {
-                    toast = Toast.makeText(context, "Please Fill Information", Toast.LENGTH_LONG);
-                    toast.show();
+                    break;
                 }
-                break;
         }
 
+    private boolean validate() {
+        return nameEditText.getText().toString().length() != 0 && picturePath.length() != 0;
     }
 
     @Override
@@ -175,6 +173,8 @@ public class AddFoodFragment extends Fragment implements View.OnClickListener, A
     }
 
     private void addFood() {
+        progressBar.setVisibility(View.VISIBLE);
+        relativeLayout.setVisibility(View.VISIBLE);
         String imageFood = storeImageToFirebase();
         food = new Food(nameEditText.getText().toString(),
                 imageFood,
@@ -187,13 +187,11 @@ public class AddFoodFragment extends Fragment implements View.OnClickListener, A
                 progressBar.setVisibility(View.GONE);
                 relativeLayout.setVisibility(View.GONE);
                 if (success) {
-                    toast = Toast.makeText(context, "Add Success", Toast.LENGTH_LONG);
-                    toast.show();
+                    Snackbar.make(imageView, "Add Success", Snackbar.LENGTH_SHORT).show();
                     intent = new Intent(context, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    toast = Toast.makeText(context, "Add Fail Please Check Internet", Toast.LENGTH_LONG);
-                    toast.show();
+                    Snackbar.make(imageView, "Add Fail Please Check Internet", Snackbar.LENGTH_SHORT).show();
                 }
 
                 return success;

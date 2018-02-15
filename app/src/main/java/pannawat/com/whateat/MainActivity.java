@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         addFoodFragment = new AddFoodFragment();
         menuFragment = new MenuFragment();
         openFragment(randomFragment);
+        setTitleName("RANDOM");
         setUI();
         setListener();
     }
@@ -45,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
+    private void setTitleName(String name) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        toolbar.bringToFront();
+    }
+
     public void setListener() {
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
@@ -53,14 +60,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_food:
+                setTitleName("RANDOM");
                 openFragment(randomFragment);
                 break;
             case R.id.item_add:
+                setTitleName("ADD FOOD");
                 openFragment(addFoodFragment);
                 break;
-            case R.id.item_history:
-                break;
             case R.id.item_menu:
+                setTitleName("MENU FOOD");
                 openFragment(menuFragment);
                 break;
         }

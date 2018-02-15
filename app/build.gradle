@@ -11,13 +11,18 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 repositories {
+    maven { url "https://jitpack.io" }
     maven { url 'https://maven.fabric.io/public' }
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
 }
 
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "pannawat.com.whateat"
         minSdkVersion 22
@@ -40,19 +45,21 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    //noinspection GradleCompatible
+    compile 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:25.0.0'
-    compile 'com.android.support:support-v4:26.0.0-alpha1'
-    compile 'com.google.firebase:firebase-database:10.0.1'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.google.firebase:firebase-database:11.8.0'
     compile 'org.mongodb:mongo-java-driver:2.13.2'
     compile 'br.com.simplepass:loading-button-android:1.7.2'
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    compile 'com.daimajia.androidanimations:library:2.3@aar'
     testCompile 'junit:junit:4.12'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
 }
-
-
 
 apply plugin: 'com.google.gms.google-services'
