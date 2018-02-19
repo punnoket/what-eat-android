@@ -1,12 +1,17 @@
 package pannawat.com.whateat;
 
+import android.annotation.SuppressLint;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -26,10 +31,17 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import pannawat.com.whateat.data.Food;
 import pannawat.com.whateat.model.FoodModel;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class AddFoodFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -51,8 +63,10 @@ public class AddFoodFragment extends Fragment implements View.OnClickListener, A
     private RelativeLayout relativeLayout;
     private ProgressBar progressBar;
     private Toast toast;
+    private Bitmap bitmap;
 
     private final int RESULT_LOAD_IMAGE = 1;
+    private static int IMG_RESULT = 1;
     private FragmentActivity context;
 
     /*data variable*/
@@ -62,6 +76,7 @@ public class AddFoodFragment extends Fragment implements View.OnClickListener, A
     private String type;
     private String picturePath;
     private Intent intent;
+    private String string;
 
     public AddFoodFragment() {
     }
@@ -200,39 +215,35 @@ public class AddFoodFragment extends Fragment implements View.OnClickListener, A
     }
 
     private String storeImageToFirebase() {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 8; // shrink it down otherwise we will use stupid amounts of memory
-        Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] bytes = baos.toByteArray();
-        String imageBase64 = Base64.encodeToString(bytes, Base64.DEFAULT);
-        return imageBase64;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
     public void browseImage() {
-        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, RESULT_LOAD_IMAGE);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Video"),RESULT_LOAD_IMAGE);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            Uri selectedImage = data.getData();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == RESULT_LOAD_IMAGE) {
+                Uri selectedImageUri = data.getData();
 
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = context.getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                picturePath = selectedImageUri.getPath();
+                bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), selectedImageUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageView.setImageBitmap(bitmap);//trying bitmap
+            }
         }
-
     }
-
 }
